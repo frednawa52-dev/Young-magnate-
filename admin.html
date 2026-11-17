@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Young Magnate | Admin Panel</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Young Magnate Admin</h1>
+    <p>Private Prediction Control Panel</p>
+  </header>
+
+  <div class="container">
+    <!-- Login Box -->
+    <div id="login-box" class="card" style="display:block;">
+      <h3>Admin Sign In</h3>
+      <input type="email" id="email" placeholder="Admin Email">
+      <input type="password" id="password" placeholder="Password">
+      <button id="login-btn">Login</button>
+    </div>
+
+    <!-- Dashboard Box (Hidden until you log in) -->
+    <div id="dashboard-box" style="display:none;">
+      <div class="card" style="display:block;">
+        <h3>Post New Match Prediction</h3>
+        <input type="text" id="league" placeholder="League (e.g. Premier League)">
+        <input type="text" id="match" placeholder="Match (e.g. Man City vs Arsenal)">
+        <input type="text" id="kickoff" placeholder="Kickoff Time (e.g. Today 20:45)">
+        <input type="text" id="tip" placeholder="Prediction (e.g. Over 2.5 Goals)">
+        <input type="text" id="odds" placeholder="Odds (e.g. 1.85)">
+        <button id="post-btn">Publish Prediction Live</button>
+      </div>
+
+      <h3 style="margin: 20px 0 10px;">Manage Live Predictions</h3>
+      <div id="admin-list"></div>
+      <button id="logout-btn" style="background:#334155; color:white; margin-top:20px;">Logout</button>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    // PASTE YOUR SAME FIREBASE CONFIG HERE
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    onAuthStateChanged(auth, (user) => {
+      document.getElementById("login-box").style.display = user ? "none" : "block";
+      document.getElementById("dashboard-box").style.display = user ? "block" : "none";
+    });
+
+    document.getElementById("login-btn").onclick = () => {
+      signInWithEmailAndPassword(auth, document.getElementById("email").value, document.getElementById("password").value)
+        .catch(err => alert("Login failed: " + err.message));
+    };
+
+    document.getElementById("logout-btn").onclick = () => signOut(auth);
+
+    document.getElementById("post-btn").onclick = async () => {
+      await addDoc(collection(db, "predictions"), {
+        league: document.getElementById("league").value,
+        match: document.getElementById("match").value,
+        kickoff: document.getElementById("kickoff").value,
+        tip: document.getElementById("tip").value,
+        odds: document.getElementById("odds").value,
+        status: "PENDING",
+        createdAt: serverTimestamp()
+      });
+      document.querySelectorAll("#dashboard-box input").forEach(i => i.value = "");
+    };
+
+    const q = query(collection(db, "predictions"), orderBy("createdAt", "desc"));
+    onSnapshot(q, (snapshot) => {
+      const adminList = document.getElementById("admin-list");
+      adminList.innerHTML = "";
+      snapshot.forEach((item) => {
+        const d = item.data();
+        const div = document.createElement("div");
+        div.className = "card";
+        div.innerHTML = `
+          <div>
+            <strong>${d.match}</strong> (${d.tip}) - <span class="status ${d.status}">${d.status}</span>
+          </div>
+          <div class="admin-actions">
+            <button onclick="setStatus('${item.id}', 'WON')" style="background:#16a34a; color:white;">Won</button>
+            <button onclick="setStatus('${item.id}', 'LOST')" style="background:#dc2626; color:white;">Lost</button>
+            <button onclick="removeTip('${item.id}')" style="background:#475569; color:white;">Del</button>
+          </div>
+        `;
+        adminList.appendChild(div);
+      });
+    });
+
+    window.setStatus = (id, status) => updateDoc(doc(db, "predictions", id), { status });
+    window.removeTip = (id) => deleteDoc(doc(db, "predictions", id));
+  </script>
+</body>
+</html>
