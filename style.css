@@ -257,4 +257,33 @@ header h1 {
   color: #4ade80;
   font-weight: bold;
 }
+/* Fix Prediction Card Layout on Mobile */
+.card {
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 14px !important;
+}
+
+.card > div {
+  margin-bottom: 4px;
+}
+
+.teams {
+  flex: 1 1 100%;
+  font-size: 16px !important;
+  font-weight: 700;
+}
+
+.pick {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.status {
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
 
