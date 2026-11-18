@@ -28,16 +28,8 @@
       <span>💎 STAKE SMART &bull; 18+ PLAY RESPONSIBLY</span>
     </div>
   </div>
-    <!-- Today's Golden Banker Featured Card -->
-  <div class="card golden-banker-card">
-    <div class="banker-header">✨🔥 TODAY'S GOLDEN BANKER 🔥✨</div>
-    <div class="league">PREMIER LEAGUE • TODAY 16:00</div>
-    <div class="teams">Man City vs Arsenal</div>
-    <div class="pick">Tip: <strong>Both Teams to Score (BTTS)</strong></div>
-    <div class="odds-pill">Odds: 1.80</div>
-  </div>
+    <div id="golden-banker-container"></div>
   
-
   <div class="container" id="predictions-list">
     <p style="text-align: center; color:#74a3b8;">Loading today's predictions...</p>
   </div>
@@ -83,27 +75,45 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    const list = document.getElementById("predictions-list");
+    const bankerContainer = document.getElementById("golden-banker-container");
+const list = document.getElementById("predictions-list");
+
+const q = query(collection(db, "predictions"), orderBy("timestamp", "desc"));
+onSnapshot(q, (snapshot) => {
+  bankerContainer.innerHTML = "";
+  list.innerHTML = "";
+  if (snapshot.empty) {
+    list.innerHTML = "<p style='text-align:center; color:#74a3b8;'>No predictions posted yet.</p>";
+    return;
+  }
+
+  let isFirst = true;
+  snapshot.forEach((doc) => {
+    const data = doc.data();
+    if (isFirst) {
+      bankerContainer.innerHTML = `
+        <div class="card golden-banker-card">
+          <div class="banker-header">✨🔥 TODAY'S GOLDEN BANKER 🔥✨</div>
+          <div class="league">${data.league}</div>
+          <div class="teams">${data.match}</div>
+          <div class="pick">Tip: <strong>${data.tip}</strong></div>
+          <div class="odds-pill">Odds: ${data.odds || '1.80'}</div>
+        </div>
+      `;
+      isFirst = false;
+    } else {
+      list.innerHTML += `
+        <div class="card">
+          <div class="league">${data.league}</div>
+          <div class="teams">${data.match}</div>
+          <div class="pick">Tip: <strong>${data.tip}</strong></div>
+          <div class="status ${data.status}">${data.status}</div>
+        </div>
+      `;
+    }
+  });
+});
     
-    const q = query(collection(db, "predictions"), orderBy("createdAt", "desc"));
-    onSnapshot(q, (snapshot) => {
-      list.innerHTML = "";
-      if (snapshot.empty) {
-        list.innerHTML = "<p style='text-align:center;'>No predictions posted yet today.</p>";
-        return;
-      }
-      snapshot.forEach((doc) => {
-        const data = doc.data();
-        list.innerHTML += `
-          <div class="card">
-            <div class="league">${data.league} &bull; ${data.kickoff}</div>
-            <div class="teams">${data.match}</div>
-            <div class="pick">Tip: <strong>${data.tip}</strong> (Odds: ${data.odds})</div>
-            <div class="status ${data.status}">${data.status}</div>
-          </div>
-        `;
-      });
-    });
   </script>
 </body>
     <!-- Floating VIP WhatsApp Button -->
