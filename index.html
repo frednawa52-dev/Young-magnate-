@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="google-site-verification" content="9xVgwpLqh6DfNKK_EWXrLQeewcUWDRVUZvVXbnz7oes" />
+  <meta name="google-site-verification" content="0xVgvplqhGbNNiK_Dk4rlQnactdD8hUZvUbtr7Seec">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Young Magnate | Football Predictions</title>
   <link rel="stylesheet" href="style.css">
@@ -10,31 +10,62 @@
 <body>
   <header>
     <h1>Young Magnate</h1>
-    <p>Daily Expert Football Tips &bull; Live Auto-Updates</p>
+    <p style="text-align:center; color:#74a3b8;">Daily Expert Football Tips &bull; Live Auto-Updates</p>
   </header>
 
-  <div class="container" id="predictions-list">
-    <p style="text-align:center; color:#94a3b8;">Loading today's predictions...</p>
+  <!-- Top Action Buttons -->
+  <div class="top-actions">
+    <a href="#predictions-list" class="btn-red">TODAY'S TIPS</a>
+    <a href="https://wa.me/" target="_blank" class="btn-purple">JOIN VIP / WHATSAPP</a>
   </div>
+
+  <div class="container" id="predictions-list">
+    <p style="text-align: center; color:#74a3b8;">Loading today's predictions...</p>
+  </div>
+
+  <!-- 18+ Responsible Gambling & Social Footer -->
+  <footer class="site-footer">
+    <div class="age-badge">
+      <span class="badge-circle">18+</span>
+      <span class="badge-title">Play Responsibly</span>
+    </div>
+    
+    <p class="footer-text">
+      Young Magnate provides football predictions and match analysis for informational and entertainment purposes only.
+    </p>
+    <p class="footer-text">
+      <strong>You must be 18 years old or over to use this site.</strong><br>
+      Please bet responsibly and never stake more than you can afford to lose.
+    </p>
+
+    <hr class="footer-divider">
+
+    <div class="social-links">
+      <a href="https://facebook.com" target="_blank" class="social-icon fb">f</a>
+      <a href="https://wa.me/" target="_blank" class="social-icon wa">WA</a>
+      <a href="mailto:frednawa52@gmail.com" class="social-icon mail">✉</a>
+    </div>
+    
+    <p class="copyright">&copy; 2026 Young Magnate. All rights reserved.</p>
+  </footer>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getFirestore, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-    // PASTE YOUR FIREBASE CONFIG HERE
-    const firebaseConfig ={
-  apiKey: "AIzaSyDFy9lpQ5Zb4uB0VjRGwzrhuUlWqDTwlPU",
-  authDomain: "young-magnate-43.firebaseapp.com",
-  projectId: "young-magnate-43",
-  storageBucket: "young-magnate-43.firebasestorage.app",
-  messagingSenderId: "813734397364",
-  appId: "1:813734397364:web:09ba7ea4fb8b27bbfcdee1"
-};
+    const firebaseConfig = {
+      apiKey: "AIzaSyDFy0l1Q5Zu4uB0VJR0vzhu2lAqDTAIPU",
+      authDomain: "young-magnate-43.firebaseapp.com",
+      projectId: "young-magnate-43",
+      storageBucket: "young-magnate-43.appspot.com",
+      messagingSenderId: "813714397364",
+      appId: "1:813714397364:web:09ba7ea6f6b527hbfedee1"
+    };
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     const list = document.getElementById("predictions-list");
-
+    
     const q = query(collection(db, "predictions"), orderBy("createdAt", "desc"));
     onSnapshot(q, (snapshot) => {
       list.innerHTML = "";
@@ -46,11 +77,9 @@
         const data = doc.data();
         list.innerHTML += `
           <div class="card">
-            <div>
-              <div class="league">${data.league} &bull; ${data.kickoff}</div>
-              <div class="teams">${data.match}</div>
-              <div class="pick">Tip: <strong>${data.tip}</strong> (Odds: ${data.odds})</div>
-            </div>
+            <div class="league">${data.league} &bull; ${data.kickoff}</div>
+            <div class="teams">${data.match}</div>
+            <div class="pick">Tip: <strong>${data.tip}</strong> (Odds: ${data.odds})</div>
             <div class="status ${data.status}">${data.status}</div>
           </div>
         `;
