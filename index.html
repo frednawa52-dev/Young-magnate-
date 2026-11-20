@@ -3,47 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Young Magnate 🧲 | Daily Football Predictions & Match Analysis</title>
-  <meta name="description" content="Young Magnate daily football predictions, day-by-day fixtures, and match analysis with live updates." />
+  <title>Young Magnate | Daily Football Predictions</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg: #05080f;
       --panel: #0c1220;
-      --panel-2: #11192d;
-      --border: rgba(148, 163, 184, 0.16);
+      --border: rgba(148, 163, 184, 0.18);
       --text: #f8fafc;
       --muted: #94a3b8;
       --gold: #f59e0b;
       --emerald: #10b981;
       --cyan: #22d3ee;
       --violet: #a855f7;
-      --rose: #f43f5e;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
       overflow-x: hidden;
-      line-height: 1.5;
+      padding: 24px 16px 80px;
     }
 
-    /* Moving Colorful Ambient Lights (Non-blocking) */
-    .ambient-lights {
+    .ambient {
       position: fixed;
       inset: 0;
-      z-index: 0;
       pointer-events: none;
+      z-index: 0;
       overflow: hidden;
     }
 
@@ -52,144 +44,101 @@
       border-radius: 50%;
       filter: blur(85px);
       opacity: 0.24;
-      will-change: transform;
     }
 
     .orb-1 {
-      width: 300px;
-      height: 300px;
-      background: radial-gradient(circle, var(--cyan), transparent 70%);
-      top: -60px;
-      left: -60px;
-      animation: driftOne 14s ease-in-out infinite alternate;
+      width: 280px; height: 280px;
+      background: var(--cyan);
+      top: -60px; left: -60px;
+      animation: moveA 14s ease-in-out infinite alternate;
     }
 
     .orb-2 {
-      width: 320px;
-      height: 320px;
-      background: radial-gradient(circle, var(--gold), transparent 70%);
-      top: 28%;
-      right: -80px;
-      animation: driftTwo 17s ease-in-out infinite alternate;
+      width: 300px; height: 300px;
+      background: var(--gold);
+      top: 30%; right: -70px;
+      animation: moveB 17s ease-in-out infinite alternate;
     }
 
     .orb-3 {
-      width: 340px;
-      height: 340px;
-      background: radial-gradient(circle, var(--violet), transparent 70%);
-      bottom: -80px;
-      left: 15%;
-      animation: driftThree 20s ease-in-out infinite alternate;
+      width: 320px; height: 320px;
+      background: var(--violet);
+      bottom: -80px; left: 10%;
+      animation: moveC 20s ease-in-out infinite alternate;
     }
 
-    @keyframes driftOne {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(90px, 70px) scale(1.15); }
-    }
-
-    @keyframes driftTwo {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(-95px, -65px) scale(1.12); }
-    }
-
-    @keyframes driftThree {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(75px, -80px) scale(1.18); }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .orb, .rainbow-frame::before {
-        animation: none !important;
-      }
-    }
+    @keyframes moveA { to { transform: translate(85px, 65px) scale(1.12); } }
+    @keyframes moveB { to { transform: translate(-90px, -60px) scale(1.12); } }
+    @keyframes moveC { to { transform: translate(70px, -75px) scale(1.15); } }
 
     .wrap {
       position: relative;
       z-index: 1;
       max-width: 680px;
       margin: 0 auto;
-      padding: 24px 16px 84px;
     }
 
-    /* Hero Header */
-    .hero {
-      text-align: center;
-      margin-bottom: 20px;
-    }
+    .hero { text-align: center; margin-bottom: 20px; }
 
-    .live-pill {
+    .pill-live {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       padding: 6px 14px;
       border-radius: 999px;
-      background: rgba(15, 23, 42, 0.85);
+      background: rgba(15, 23, 42, 0.9);
       border: 1px solid rgba(34, 211, 238, 0.3);
       font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: #cbd5e1;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
-    .live-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--emerald);
-      box-shadow: 0 0 10px var(--emerald);
+    .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--emerald); box-shadow: 0 0 8px var(--emerald);
     }
 
-    .brand-title {
-      font-size: clamp(32px, 8.5vw, 48px);
+    .title {
+      font-size: clamp(32px, 8.5vw, 46px);
       font-weight: 900;
-      line-height: 1.04;
-      letter-spacing: -0.02em;
+      line-height: 1.05;
       background: linear-gradient(90deg, #facc15, #34d399, #38bdf8, #f59e0b);
       background-size: 250% auto;
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      animation: gradientShift 7s linear infinite;
+      animation: grad 7s linear infinite;
     }
 
-    @keyframes gradientShift {
-      0% { background-position: 0% center; }
-      100% { background-position: 250% center; }
-    }
+    @keyframes grad { to { background-position: 250% center; } }
 
-    .subtitle {
-      margin-top: 8px;
-      font-size: 14px;
-      color: #60a5fa;
-      font-weight: 500;
-    }
+    .sub { margin-top: 8px; color: #60a5fa; font-size: 14px; }
 
-    /* Animated Light Border Frame */
-    .rainbow-frame {
-      position: relative;
+    .glow-box {
       border-radius: 20px;
       padding: 2px;
       background: linear-gradient(120deg, var(--cyan), var(--emerald), var(--violet), var(--gold), var(--cyan));
       background-size: 300% 300%;
-      animation: borderFlow 8s linear infinite;
+      animation: borderAnim 8s linear infinite;
       margin-bottom: 22px;
     }
 
-    @keyframes borderFlow {
+    @keyframes borderAnim {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
-    .action-box {
+    .glow-inner {
       background: #070b14;
       border-radius: 18px;
       padding: 14px;
     }
 
-    .cta-grid {
+    .cta-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
@@ -200,40 +149,23 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
       padding: 14px 12px;
       border-radius: 12px;
-      border: none;
-      font-family: inherit;
       font-size: 13px;
       font-weight: 800;
-      letter-spacing: 0.04em;
       text-transform: uppercase;
       text-decoration: none;
-      cursor: pointer;
-      transition: transform 0.15s ease, opacity 0.15s ease;
     }
 
-    .btn:active {
-      transform: scale(0.97);
-    }
+    .btn-red { background: linear-gradient(135deg, #ef4444, #b91c1c); color: #fff; }
+    .btn-gold { background: linear-gradient(135deg, #f59e0b, #d97706); color: #090d16; }
 
-    .btn-tips {
-      background: linear-gradient(135deg, #ef4444, #b91c1c);
-      color: #fff;
-    }
-
-    .btn-vip {
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-      color: #090d16;
-    }
-
-    .vip-strip {
+    .vip-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      background: rgba(15, 23, 42, 0.92);
+      background: rgba(15, 23, 42, 0.9);
       border: 1px solid rgba(245, 158, 11, 0.25);
       border-radius: 12px;
       padding: 10px 12px;
@@ -242,52 +174,34 @@
       color: #fde68a;
     }
 
-    .vip-marquee {
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-
-    .count-badge {
-      background: rgba(16, 185, 129, 0.16);
+    .badge-count {
+      background: rgba(16, 185, 129, 0.18);
       color: #34d399;
-      border: 1px solid rgba(16, 185, 129, 0.35);
       padding: 3px 9px;
       border-radius: 999px;
       font-size: 11px;
-      font-weight: 700;
-      flex-shrink: 0;
+      white-space: nowrap;
     }
 
-    /* Filter Section */
-    .filter-header {
+    .filter-top {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       gap: 8px;
-      margin-bottom: 10px;
       flex-wrap: wrap;
+      margin-bottom: 10px;
     }
 
-    .section-label {
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
+    .label { font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
 
-    .status-readout {
-      font-size: 12px;
-      font-weight: 700;
-      color: #22d3ee;
+    .readout {
+      font-size: 12px; font-weight: 700; color: #22d3ee;
       background: rgba(8, 47, 73, 0.55);
-      border: 1px solid rgba(34, 211, 238, 0.28);
-      padding: 4px 10px;
-      border-radius: 999px;
+      border: 1px solid rgba(34, 211, 238, 0.3);
+      padding: 4px 10px; border-radius: 999px;
     }
 
-    .day-pills {
+    .pills {
       display: flex;
       gap: 8px;
       overflow-x: auto;
@@ -296,9 +210,9 @@
       scrollbar-width: none;
     }
 
-    .day-pills::-webkit-scrollbar {
-      display: none;
-    }
+    .pills::-webkit-scrollbar { display: none; }
+
+    .state-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
 
     .pill {
       padding: 8px 14px;
@@ -311,7 +225,6 @@
       font-weight: 700;
       cursor: pointer;
       white-space: nowrap;
-      transition: all 0.15s ease;
     }
 
     .pill.active {
@@ -320,248 +233,108 @@
       border-color: transparent;
     }
 
-    .state-row {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 18px;
-      flex-wrap: wrap;
-    }
+    .list { display: grid; gap: 12px; margin-bottom: 24px; }
 
-    /* Match Cards */
-    .matches-list {
-      display: grid;
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-
-    .match-card {
-      background: linear-gradient(160deg, rgba(17, 25, 45, 0.94), rgba(10, 15, 28, 0.96));
+    .card {
+      background: rgba(15, 23, 42, 0.94);
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 15px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
     }
 
-    .card-top {
+    .card-head {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       gap: 8px;
       flex-wrap: wrap;
       margin-bottom: 8px;
     }
 
-    .league-tag {
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #38bdf8;
-    }
+    .league { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #38bdf8; }
 
-    .tags-group {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
+    .tags { display: flex; gap: 6px; flex-wrap: wrap; }
 
-    .day-badge {
+    .tag {
       font-size: 11px;
       font-weight: 700;
       padding: 3px 9px;
       border-radius: 999px;
-      background: rgba(168, 85, 247, 0.16);
-      color: #e9d5ff;
-      border: 1px solid rgba(168, 85, 247, 0.35);
+      background: rgba(148, 163, 184, 0.15);
+      color: #e2e8f0;
     }
 
-    .play-badge {
-      font-size: 11px;
-      font-weight: 700;
-      padding: 3px 9px;
-      border-radius: 999px;
-    }
+    .tag-WON { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; }
+    .tag-LOST { background: rgba(244, 63, 94, 0.2); color: #fda4af; }
+    .tag-PENDING { background: rgba(245, 158, 11, 0.2); color: #fcd34d; }
 
-    .play-Playing {
-      background: rgba(34, 211, 238, 0.14);
-      color: #67e8f9;
-      border: 1px solid rgba(34, 211, 238, 0.35);
-    }
+    .teams { font-size: 17px; font-weight: 800; margin-bottom: 6px; }
+    .meta { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-size: 13px; color: var(--muted); }
+    .pick { color: #34d399; font-weight: 700; }
 
-    .play-Played {
-      background: rgba(148, 163, 184, 0.16);
-      color: #cbd5e1;
-      border: 1px solid rgba(148, 163, 184, 0.3);
-    }
-
-    .result-badge {
-      font-size: 11px;
-      font-weight: 800;
-      padding: 3px 9px;
-      border-radius: 999px;
-      text-transform: uppercase;
-    }
-
-    .res-PENDING {
-      background: rgba(245, 158, 11, 0.16);
-      color: #fcd34d;
-      border: 1px solid rgba(245, 158, 11, 0.35);
-    }
-
-    .res-WON {
-      background: rgba(16, 185, 129, 0.18);
-      color: #6ee7b7;
-      border: 1px solid rgba(16, 185, 129, 0.4);
-    }
-
-    .res-LOST {
-      background: rgba(244, 63, 94, 0.18);
-      color: #fda4af;
-      border: 1px solid rgba(244, 63, 94, 0.4);
-    }
-
-    .match-teams {
-      font-size: 17px;
-      font-weight: 800;
-      color: #ffffff;
-      margin-bottom: 6px;
-    }
-
-    .match-meta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .pick-box {
-      color: #34d399;
-      font-weight: 700;
-    }
-
-    .empty-state {
+    .empty {
       text-align: center;
-      padding: 28px 18px;
+      padding: 26px 16px;
       border-radius: 16px;
-      background: rgba(15, 23, 42, 0.72);
+      background: rgba(15, 23, 42, 0.75);
       border: 1px dashed rgba(148, 163, 184, 0.25);
       color: var(--muted);
       font-size: 14px;
     }
 
-    /* Responsible Play Box */
-    .notice-card {
+    .notice {
       background: rgba(15, 23, 42, 0.92);
       border: 1px solid var(--border);
       border-radius: 18px;
-      padding: 22px 18px;
+      padding: 20px 16px;
       text-align: center;
-      margin-bottom: 22px;
     }
 
-    .age-badge {
-      display: inline-block;
-      background: #e11d48;
-      color: #fff;
-      font-weight: 900;
-      font-size: 13px;
-      padding: 5px 10px;
-      border-radius: 999px;
-      margin-right: 8px;
-    }
-
-    .notice-title {
-      font-size: 18px;
-      font-weight: 800;
-      margin-bottom: 12px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .notice-card p {
-      font-size: 13px;
-      color: #cbd5e1;
-      margin-bottom: 10px;
-    }
-
-    .notice-card p:last-child {
-      margin-bottom: 0;
-      font-weight: 600;
-      color: #e2e8f0;
-    }
-
-    /* Footer */
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-    }
-
-    .social-btn {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: #1e293b;
-      color: #f8fafc;
-      border: 1px solid var(--border);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      font-weight: 800;
-      font-size: 13px;
-    }
+    .notice h2 { font-size: 18px; margin-bottom: 10px; }
+    .notice p { font-size: 13px; color: #cbd5e1; margin-bottom: 8px; }
   </style>
 </head>
 <body>
-  <div class="ambient-lights" aria-hidden="true">
+  <div class="ambient" aria-hidden="true">
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
   </div>
 
-  <div class="wrap" id="top">
+  <div class="wrap">
     <header class="hero">
-      <div class="live-pill">
-        <span class="live-dot"></span>
-        <span>Live Schedule • Mon – Sun</span>
-      </div>
-      <h1 class="brand-title">YOUNG MAGNATE 🧲</h1>
-      <p class="subtitle">Daily Expert Football Tips • Live Auto-Updates</p>
+      <div class="pill-live"><span class="dot"></span><span>Live Schedule • Mon – Sun</span></div>
+      <h1 class="title">YOUNG MAGNATE</h1>
+      <p class="sub">Daily Expert Football Tips • Live Auto-Updates</p>
     </header>
 
-    <div class="rainbow-frame">
-      <div class="action-box">
-        <div class="cta-grid">
-          <a href="#matches-section" class="btn btn-tips">🔥 Today's Tips</a>
+    <div class="glow-box">
+      <div class="glow-inner">
+        <div class="cta-row">
+          <a href="#fixtures" class="btn btn-red">Today's Tips</a>
           <a
-            href="https://wa.me/260761376229?text=Hello%20Young%20Magnate%2C%20I%20would%20like%20to%20join%20VIP%20and%20get%20daily%20match%20picks."
+            href="https://wa.me/260761376229?text=Hello%20Young%20Magnate%2C%20I%20would%20like%20to%20join%20VIP."
             target="_blank"
             rel="noopener noreferrer"
-            class="btn btn-vip"
+            class="btn btn-gold"
           >
             Join VIP / WhatsApp
           </a>
         </div>
-        <div class="vip-strip">
-          <div class="vip-marquee">🏆 YOUNG MAGNATE VIP: DAILY MATCH PICKS & BREAKDOWNS</div>
-          <span class="count-badge" id="match-count">0 Matches</span>
+        <div class="vip-bar">
+          <span>YOUNG MAGNATE VIP: DAILY PICKS</span>
+          <span class="badge-count" id="count-badge">0 Matches</span>
         </div>
       </div>
     </div>
 
-    <section id="matches-section">
-      <div class="filter-header">
-        <span class="section-label">Filter by Day</span>
-        <span class="status-readout" id="filter-readout">Showing all matches</span>
+    <section id="fixtures">
+      <div class="filter-top">
+        <span class="label">Filter by Day</span>
+        <span class="readout" id="readout">Showing all matches</span>
       </div>
 
-      <div class="day-pills" id="day-filters">
+      <div class="pills" id="day-pills">
         <button class="pill active" data-day="ALL">All Days</button>
         <button class="pill" data-day="Monday">Monday</button>
         <button class="pill" data-day="Tuesday">Tuesday</button>
@@ -572,48 +345,27 @@
         <button class="pill" data-day="Sunday">Sunday</button>
       </div>
 
-      <div class="state-row" id="state-filters">
+      <div class="state-pills" id="state-pills">
         <button class="pill active" data-state="ALL">All Fixtures</button>
-        <button class="pill" data-state="Playing">⚡ Playing</button>
-        <button class="pill" data-state="Played">✓ Played</button>
+        <button class="pill" data-state="Playing">Playing</button>
+        <button class="pill" data-state="Played">Played</button>
       </div>
 
-      <div class="matches-list" id="matches-list">
-        <div class="empty-state">Loading live matches from Young Magnate...</div>
+      <div class="list" id="matches-container">
+        <div class="empty">Loading live matches...</div>
       </div>
     </section>
 
-    <section class="notice-card" id="vip-section">
-      <div class="notice-title">
-        <span class="age-badge">18+</span>
-        <span>Play Responsibly</span>
-      </div>
-      <p>
-        Young Magnate provides football predictions and match analysis for informational and entertainment purposes only.
-      </p>
-      <p>
-        You must be 18 years old or over to use this site. Please bet responsibly and never stake more than you can afford to lose.
-      </p>
+    <section class="notice">
+      <h2>18+ Play Responsibly</h2>
+      <p>Young Magnate provides football predictions and match analysis for informational and entertainment purposes only.</p>
+      <p>You must be 18 or older to use this site. Please bet responsibly.</p>
     </section>
-
-    <footer class="footer-links">
-      <a href="#top" class="social-btn" aria-label="Home">YM</a>
-      <a href="#matches-section" class="social-btn" aria-label="Fixtures">⚽</a>
-      <a
-        href="https://wa.me/260761376229?text=Hello%20Young%20Magnate%2C%20I%20would%20like%20to%20join%20VIP."
-        target="_blank"
-        rel="noopener noreferrer"
-        class="social-btn"
-        aria-label="WhatsApp"
-      >
-        WA
-      </a>
-    </footer>
   </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDFy9lpQ5Zb4uB0VjRGwzrhuUlWqDTwlPU",
@@ -627,105 +379,94 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    let allPredictions = [];
-    let selectedDay = "ALL";
-    let selectedState = "ALL";
+    let items = [];
+    let dayFilter = "ALL";
+    let stateFilter = "ALL";
 
-    const matchesListEl = document.getElementById("matches-list");
-    const matchCountEl = document.getElementById("match-count");
-    const filterReadoutEl = document.getElementById("filter-readout");
+    const container = document.getElementById("matches-container");
+    const countBadge = document.getElementById("count-badge");
+    const readout = document.getElementById("readout");
 
-    function escapeHTML(str = "") {
-      return String(str).replace(/[&<>"']/g, (m) => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;"
-      }[m]));
+    function safe(v = "") {
+      return String(v).replace(/[&<>"']/g, (c) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[c]));
     }
 
-    function normalizePlayState(item) {
-      if (item.playState === "Playing" || item.playState === "Played") {
-        return item.playState;
-      }
-      if (item.status === "WON" || item.status === "LOST") {
-        return "Played";
-      }
+    function getState(item) {
+      if (item.playState === "Playing" || item.playState === "Played") return item.playState;
+      if (item.status === "WON" || item.status === "LOST") return "Played";
       return "Playing";
     }
 
-    function renderMatches() {
-      const filtered = allPredictions.filter((item) => {
-        const itemDay = item.day || "Saturday";
-        const itemState = normalizePlayState(item);
-        const dayMatch = selectedDay === "ALL" || itemDay.toLowerCase() === selectedDay.toLowerCase();
-        const stateMatch = selectedState === "ALL" || itemState === selectedState;
-        return dayMatch && stateMatch;
+    function render() {
+      const filtered = items.filter((item) => {
+        const d = item.day || "Saturday";
+        const s = getState(item);
+        const okDay = dayFilter === "ALL" || d.toLowerCase() === dayFilter.toLowerCase();
+        const okState = stateFilter === "ALL" || s === stateFilter;
+        return okDay && okState;
       });
 
-      matchCountEl.textContent = `${filtered.length} ${filtered.length === 1 ? "Match" : "Matches"}`;
-
-      if (selectedDay === "ALL" && selectedState === "ALL") {
-        filterReadoutEl.textContent = "Showing all matches";
-      } else if (selectedDay !== "ALL" && selectedState === "ALL") {
-        filterReadoutEl.textContent = `Showing ${selectedDay}`;
-      } else if (selectedDay === "ALL" && selectedState !== "ALL") {
-        filterReadoutEl.textContent = `Showing ${selectedState}`;
-      } else {
-        filterReadoutEl.textContent = `${selectedDay} • ${selectedState}`;
-      }
+      countBadge.textContent = `${filtered.length} ${filtered.length === 1 ? "Match" : "Matches"}`;
+      readout.textContent =
+        dayFilter === "ALL" && stateFilter === "ALL"
+          ? "Showing all matches"
+          : `${dayFilter === "ALL" ? "All Days" : dayFilter} • ${stateFilter === "ALL" ? "All Fixtures" : stateFilter}`;
 
       if (!filtered.length) {
-        matchesListEl.innerHTML = `<div class="empty-state">No matches found for this filter yet.</div>`;
+        container.innerHTML = `<div class="empty">No matches found for this filter yet.</div>`;
         return;
       }
 
-      matchesListEl.innerHTML = filtered.map((item) => {
-        const dayLabel = escapeHTML(item.day || "Saturday");
-        const playState = normalizePlayState(item);
-        const statusLabel = escapeHTML(item.status || "PENDING");
-        const leagueLabel = escapeHTML(item.league || "Football Fixture");
-        const matchLabel = escapeHTML(item.match || "Match");
-        const tipLabel = escapeHTML(item.tip || "Match Pick");
-        const kickoffLabel = escapeHTML(item.kickoff || "");
-
+      container.innerHTML = filtered.map((item) => {
+        const s = getState(item);
+        const st = safe(item.status || "PENDING");
         return `
-          <article class="match-card">
-            <div class="card-top">
-              <span class="league-tag">${leagueLabel}</span>
-              <div class="tags-group">
-                <span class="day-badge">${dayLabel}</span>
-                <span class="play-badge play-${playState}">${playState}</span>
-                <span class="result-badge res-${statusLabel}">${statusLabel}</span>
+          <article class="card">
+            <div class="card-head">
+              <span class="league">${safe(item.league || "Football")}</span>
+              <div class="tags">
+                <span class="tag">${safe(item.day || "Saturday")}</span>
+                <span class="tag">${safe(s)}</span>
+                <span class="tag tag-${st}">${st}</span>
               </div>
             </div>
-            <div class="match-teams">${matchLabel}</div>
-            <div class="match-meta">
-              <span>Pick: <strong class="pick-box">${tipLabel}</strong></span>
-              ${kickoffLabel ? `<span>Kickoff: ${kickoffLabel}</span>` : ""}
+            <div class="teams">${safe(item.match || "Match")}</div>
+            <div class="meta">
+              <span>Pick: <strong class="pick">${safe(item.tip || "Tip")}</strong></span>
+              ${item.kickoff ? `<span>Kickoff: ${safe(item.kickoff)}</span>` : ""}
             </div>
           </article>
         `;
       }).join("");
     }
 
-    document.querySelectorAll("#day-filters .pill").forEach((btn) => {
+    document.querySelectorAll("#day-pills .pill").forEach((btn) => {
       btn.addEventListener("click", () => {
-        document.querySelectorAll("#day-filters .pill").forEach((b) => b.classList.remove("active"));
+        document.querySelectorAll("#day-pills .pill").forEach((b) => b.classList.remove("active"));
         btn.classList.add("active");
-        selectedDay = btn.dataset.day;
-        renderMatches();
+        dayFilter = btn.dataset.day;
+        render();
       });
     });
 
-    document.querySelectorAll("#state-filters .pill").forEach((btn) => {
+    document.querySelectorAll("#state-pills .pill").forEach((btn) => {
       btn.addEventListener("click", () => {
-        document.querySelectorAll("#state-filters .pill").forEach((b) => b.classList.remove("active"));
+        document.querySelectorAll("#state-pills .pill").forEach((b) => b.classList.remove("active"));
         btn.classList.add("active");
-        selectedState = btn.dataset.state;
-        renderMatches();
+        stateFilter = btn.dataset.state;
+        render();
       });
     });
 
-    const q = query(collection(db,
+    onSnapshot(collection(db, "predictions"), (snap) => {
+      items = snap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      items.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+      render();
+    }, (err) => {
+      container.innerHTML = `<div class="empty">Firestore error: ${safe(err.message)}</div>`;
+    });
+  </script>
+</body>
+</html>
