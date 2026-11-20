@@ -5,6 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Young Magnate | Admin Panel</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .admin-select {
+      width: 100%;
+      padding: 10px 12px;
+      margin: 6px 0 10px;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      background: #0f172a;
+      color: #f8fafc;
+      font-size: 14px;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -27,9 +39,26 @@
         <h3>Post New Match Prediction</h3>
         <input type="text" id="league" placeholder="League (e.g. Premier League)">
         <input type="text" id="match" placeholder="Match (e.g. Man City vs Arsenal)">
-        <input type="text" id="kickoff" placeholder="Kickoff Time (e.g. Today 20:45)">
+        <input type="text" id="kickoff" placeholder="Kickoff Time (e.g. 20:45)">
         <input type="text" id="tip" placeholder="Prediction (e.g. Over 2.5 Goals)">
-        <input type="text" id="odds" placeholder="Odds (e.g. 1.85)">
+
+        <label for="match-day" style="display:block; margin-top:6px; font-size:13px; color:#cbd5e1;">Match Day</label>
+        <select id="match-day" class="admin-select">
+          <option value="Monday">Monday</option>
+          <option value="Tuesday">Tuesday</option>
+          <option value="Wednesday">Wednesday</option>
+          <option value="Thursday">Thursday</option>
+          <option value="Friday">Friday</option>
+          <option value="Saturday" selected>Saturday</option>
+          <option value="Sunday">Sunday</option>
+        </select>
+
+        <label for="play-state" style="display:block; font-size:13px; color:#cbd5e1;">Match State</label>
+        <select id="play-state" class="admin-select">
+          <option value="Playing" selected>Playing</option>
+          <option value="Played">Played</option>
+        </select>
+
         <button id="post-btn">Publish Prediction Live</button>
       </div>
 
@@ -44,15 +73,14 @@
     import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
     import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-    // PASTE YOUR SAME FIREBASE CONFIG HERE
     const firebaseConfig = {
-  apiKey: "AIzaSyDFy9lpQ5Zb4uB0VjRGwzrhuUlWqDTwlPU",
-  authDomain: "young-magnate-43.firebaseapp.com",
-  projectId: "young-magnate-43",
-  storageBucket: "young-magnate-43.firebasestorage.app",
-  messagingSenderId: "813734397364",
-  appId: "1:813734397364:web:09ba7ea4fb8b27bbfcdee1"
-}
+      apiKey: "AIzaSyDFy9lpQ5Zb4uB0VjRGwzrhuUlWqDTwlPU",
+      authDomain: "young-magnate-43.firebaseapp.com",
+      projectId: "young-magnate-43",
+      storageBucket: "young-magnate-43.firebasestorage.app",
+      messagingSenderId: "813734397364",
+      appId: "1:813734397364:web:09ba7ea4fb8b27bbfcdee1"
+    };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
@@ -71,15 +99,29 @@
     document.getElementById("logout-btn").onclick = () => signOut(auth);
 
     document.getElementById("post-btn").onclick = async () => {
+      const league = document.getElementById("league").value.trim();
+      const match = document.getElementById("match").value.trim();
+      const kickoff = document.getElementById("kickoff").value.trim();
+      const tip = document.getElementById("tip").value.trim();
+      const day = document.getElementById("match-day").value;
+      const playState = document.getElementById("play-state").value;
+
+      if (!match || !tip) {
+        alert("Please enter at least the Match and Prediction.");
+        return;
+      }
+
       await addDoc(collection(db, "predictions"), {
-        league: document.getElementById("league").value,
-        match: document.getElementById("match").value,
-        kickoff: document.getElementById("kickoff").value,
-        tip: document.getElementById("tip").value,
-        odds: document.getElementById("odds").value,
+        league,
+        match,
+        kickoff,
+        tip,
+        day,
+        playState,
         status: "PENDING",
         createdAt: serverTimestamp()
       });
+
       document.querySelectorAll("#dashboard-box input").forEach(i => i.value = "");
     };
 
@@ -89,22 +131,27 @@
       adminList.innerHTML = "";
       snapshot.forEach((item) => {
         const d = item.data();
+        const dayLabel = d.day || "Unassigned Day";
+        const stateLabel = d.playState || (d.status === "WON" || d.status === "LOST" ? "Played" : "Playing");
         const div = document.createElement("div");
         div.className = "card";
         div.innerHTML = `
           <div>
-            <strong>${d.match}</strong> (${d.tip}) - <span class="status ${d.status}">${d.status}</span>
+            <strong>${d.match}</strong> (${d.tip}) — <span>${dayLabel} • ${stateLabel}</span> - <span class="status ${d.status}">${d.status}</span>
           </div>
           <div class="admin-actions">
+            <button onclick="setPlayState('${item.id}', 'Playing')" style="background:#0284c7; color:white;">Playing</button>
+            <button onclick="setPlayState('${item.id}', 'Played')" style="background:#475569; color:white;">Played</button>
             <button onclick="setStatus('${item.id}', 'WON')" style="background:#16a34a; color:white;">Won</button>
             <button onclick="setStatus('${item.id}', 'LOST')" style="background:#dc2626; color:white;">Lost</button>
-            <button onclick="removeTip('${item.id}')" style="background:#475569; color:white;">Del</button>
+            <button onclick="removeTip('${item.id}')" style="background:#334155; color:white;">Del</button>
           </div>
         `;
         adminList.appendChild(div);
       });
     });
 
+    window.setPlayState = (id, playState) => updateDoc(doc(db, "predictions", id), { playState });
     window.setStatus = (id, status) => updateDoc(doc(db, "predictions", id), { status });
     window.removeTip = (id) => deleteDoc(doc(db, "predictions", id));
   </script>
