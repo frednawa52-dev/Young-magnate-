@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Young Magnate 🧲 | Daily Football Predictions & Match Analysis</title>
   <meta name="description" content="Young Magnate daily football predictions, day-by-day fixtures, and match analysis with live updates." />
-  <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)" />
-  <link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin />
-  <link href="[https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap](https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap)" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg: #05080f;
@@ -539,7 +539,14 @@
       <div class="action-box">
         <div class="cta-grid">
           <a href="#matches-section" class="btn btn-tips">🔥 Today's Tips</a>
-          <a href="#vip-section" class="btn btn-vip">Join VIP / WhatsApp</a>
+          <a
+            href="https://wa.me/260761376229?text=Hello%20Young%20Magnate%2C%20I%20would%20like%20to%20join%20VIP%20and%20get%20daily%20match%20picks."
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-vip"
+          >
+            Join VIP / WhatsApp
+          </a>
         </div>
         <div class="vip-strip">
           <div class="vip-marquee">🏆 YOUNG MAGNATE VIP: DAILY MATCH PICKS & BREAKDOWNS</div>
@@ -592,13 +599,21 @@
     <footer class="footer-links">
       <a href="#top" class="social-btn" aria-label="Home">YM</a>
       <a href="#matches-section" class="social-btn" aria-label="Fixtures">⚽</a>
-      <a href="#vip-section" class="social-btn" aria-label="Info">18+</a>
+      <a
+        href="https://wa.me/260761376229?text=Hello%20Young%20Magnate%2C%20I%20would%20like%20to%20join%20VIP."
+        target="_blank"
+        rel="noopener noreferrer"
+        class="social-btn"
+        aria-label="WhatsApp"
+      >
+        WA
+      </a>
     </footer>
   </div>
 
   <script type="module">
-    import { initializeApp } from "[https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js](https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js)";
-    import { getFirestore, collection, query, orderBy, onSnapshot } from "[https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js](https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js)";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDFy9lpQ5Zb4uB0VjRGwzrhuUlWqDTwlPU",
@@ -649,14 +664,16 @@
         return dayMatch && stateMatch;
       });
 
-      matchCountEl.textContent = `${filtered.length}${filtered.length === 1 ? "Match" : "Matches"}`;
+      matchCountEl.textContent = `${filtered.length} ${filtered.length === 1 ? "Match" : "Matches"}`;
 
       if (selectedDay === "ALL" && selectedState === "ALL") {
         filterReadoutEl.textContent = "Showing all matches";
       } else if (selectedDay !== "ALL" && selectedState === "ALL") {
-        filterReadoutEl.textContent = `Showing ${selectedDay}`; } else if (selectedDay === "ALL" && selectedState !== "ALL") { filterReadoutEl.textContent = `Showing ${selectedState}`;
+        filterReadoutEl.textContent = `Showing ${selectedDay}`;
+      } else if (selectedDay === "ALL" && selectedState !== "ALL") {
+        filterReadoutEl.textContent = `Showing ${selectedState}`;
       } else {
-        filterReadoutEl.textContent = `${selectedDay} •${selectedState}`;
+        filterReadoutEl.textContent = `${selectedDay} • ${selectedState}`;
       }
 
       if (!filtered.length) {
@@ -685,7 +702,8 @@
             </div>
             <div class="match-teams">${matchLabel}</div>
             <div class="match-meta">
-              <span>Pick: <strong class="pick-box">${tipLabel}</strong></span>${kickoffLabel ? `<span>Kickoff: ${kickoffLabel}</span>` : ""}
+              <span>Pick: <strong class="pick-box">${tipLabel}</strong></span>
+              ${kickoffLabel ? `<span>Kickoff: ${kickoffLabel}</span>` : ""}
             </div>
           </article>
         `;
@@ -710,8 +728,4 @@
       });
     });
 
-    const q = query(collection(db, "predictions"), orderBy("createdAt", "desc"));
-    onSnapshot(q, (snapshot) => {
-      allPredictions = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
-      renderMatches();
-  
+    const q = query(collection(db,
