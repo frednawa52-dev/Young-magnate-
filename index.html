@@ -1,122 +1,421 @@
+```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="google-site-verification" content="0xVgvplqhGbNNiK_Dk4rlQnactdD8hUZvUbtr7Seec">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Young Magnate | Football Predictions</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header>
-    <h1>Young Magnate</h1>
-    <p style="text-align:center; color:#74a3b8;">Daily Expert Football Tips &bull; Live Auto-Updates</p>
-  </header>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YOUNG MAGNATE | Daily Expert Football Tips</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-  <!-- Top Action Buttons -->
-  <div class="top-actions">
-    <a href="#predictions-list" class="btn-red">TODAY'S TIPS</a>
-    <a href="https://wa.me/" target="_blank" class="btn-purple">JOIN VIP / WHATSAPP</a>
-  </div>
-    <!-- VIP Live Ticker -->
-  <div class="vip-ticker">
-    <div class="ticker-content">
-      <span>🏆 YOUNG MAGNATE VIP: DAILY HIGH-CONFIDENCE SELECTIONS</span>
-      <span>&bull;</span>
-      <span>⚡ LIVE AUTO-UPDATES ACTIVE</span>
-      <span>&bull;</span>
-      <span>💎 STAKE SMART &bull; 18+ PLAY RESPONSIBLY</span>
-    </div>
-  </div>
-    <div id="golden-banker-container"></div>
-  
-  <div class="container" id="predictions-list">
-    <p style="text-align: center; color:#74a3b8;">Loading today's predictions...</p>
-  </div>
-
-  <!-- 18+ Responsible Gambling & Social Footer -->
-  <footer class="site-footer">
-    <div class="age-badge">
-      <span class="badge-circle">18+</span>
-      <span class="badge-title">Play Responsibly</span>
-    </div>
-    
-    <p class="footer-text">
-      Young Magnate provides football predictions and match analysis for informational and entertainment purposes only.
-    </p>
-    <p class="footer-text">
-      <strong>You must be 18 years old or over to use this site.</strong><br>
-      Please bet responsibly and never stake more than you can afford to lose.
-    </p>
-
-    <hr class="footer-divider">
-
-    <div class="social-links">
-      <a href="https://facebook.com" target="_blank" class="social-icon fb">f</a>
-      <a href="https://wa.me/" target="_blank" class="social-icon wa">WA</a>
-      <a href="mailto:frednawa52@gmail.com" class="social-icon mail">✉</a>
-    </div>
-    
-    <p class="copyright">&copy; 2026 Young Magnate. All rights reserved.</p>
-  </footer>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyDFy0l1Q5Zu4uB0VJR0vzhu2lAqDTAIPU",
-      authDomain: "young-magnate-43.firebaseapp.com",
-      projectId: "young-magnate-43",
-      storageBucket: "young-magnate-43.appspot.com",
-      messagingSenderId: "813714397364",
-      appId: "1:813714397364:web:09ba7ea6f6b527hbfedee1"
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            magnate: {
+              bg: '#090D16',
+              card: '#111827',
+              panel: '#151E30',
+            },
+          },
+        },
+      },
     };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const bankerContainer = document.getElementById("golden-banker-container");
-const list = document.getElementById("predictions-list");
-
-const q = query(collection(db, "predictions"), orderBy("timestamp", "desc"));
-onSnapshot(q, (snapshot) => {
-  bankerContainer.innerHTML = "";
-  list.innerHTML = "";
-  if (snapshot.empty) {
-    list.innerHTML = "<p style='text-align:center; color:#74a3b8;'>No predictions posted yet.</p>";
-    return;
-  }
-
-  let isFirst = true;
-  snapshot.forEach((doc) => {
-    const data = doc.data();
-    if (isFirst) {
-      bankerContainer.innerHTML = `
-        <div class="card golden-banker-card">
-          <div class="banker-header">✨🔥 TODAY'S GOLDEN BANKER 🔥✨</div>
-          <div class="league">${data.league}</div>
-          <div class="teams">${data.match}</div>
-          <div class="pick">Tip: <strong>${data.tip}</strong></div>
-          <div class="odds-pill">Odds: ${data.odds || '1.80'}</div>
-        </div>
-      `;
-      isFirst = false;
-    } else {
-      list.innerHTML += `
-        <div class="card">
-          <div class="league">${data.league}</div>
-          <div class="teams">${data.match}</div>
-          <div class="pick">Tip: <strong>${data.tip}</strong></div>
-          <div class="status ${data.status}">${data.status}</div>
-        </div>
-      `;
-    }
-  });
-});
-    
   </script>
-</body>
-    <!-- Floating VIP WhatsApp Button -->
-  <a href="https://wa.me/0761376229" target="_blank" class="floating-wa" title="Chat on WhatsApp">💬</a>
-  
-</html>
+
+  <style>
+    /* Base dark background matching mobile screenshot */
+    body {
+      background-color: #090D16;
+      color: #F8FAFC;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Battery-friendly moving colorful ambient light orbs (pointer-events: none) */
+    .ambient-light-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .light-orb {
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(75px);
+      opacity: 0.24;
+      will-change: transform;
+    }
+
+    .orb-gold {
+      width: 280px;
+      height: 280px;
+      top: -60px;
+      left: -60px;
+      background: radial-gradient(circle, #F59E0B 0%, rgba(245, 158, 11, 0) 70%);
+      animation: driftOrbOne 14s ease-in-out infinite alternate;
+    }
+
+    .orb-cyan {
+      width: 300px;
+      height: 300px;
+      top: 22%;
+      right: -90px;
+      background: radial-gradient(circle, #06B6D4 0%, rgba(6, 182, 212, 0) 70%);
+      animation: driftOrbTwo 17s ease-in-out infinite alternate;
+    }
+
+    .orb-emerald {
+      width: 290px;
+      height: 290px;
+      bottom: 8%;
+      left: 10%;
+      background: radial-gradient(circle, #10B981 0%, rgba(16, 185, 129, 0) 70%);
+      animation: driftOrbThree 19s ease-in-out infinite alternate;
+    }
+
+    .orb-violet {
+      width: 240px;
+      height: 240px;
+      bottom: -50px;
+      right: 12%;
+      background: radial-gradient(circle, #8B5CF6 0%, rgba(139, 92, 246, 0) 70%);
+      animation: driftOrbFour 15s ease-in-out infinite alternate;
+    }
+
+    @keyframes driftOrbOne {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      100% { transform: translate3d(65px, 45px, 0) scale(1.12); }
+    }
+
+    @keyframes driftOrbTwo {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      100% { transform: translate3d(-60px, 55px, 0) scale(1.08); }
+    }
+
+    @keyframes driftOrbThree {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      100% { transform: translate3d(55px, -50px, 0) scale(1.14); }
+    }
+
+    @keyframes driftOrbFour {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      100% { transform: translate3d(-45px, -40px, 0) scale(1.06); }
+    }
+
+    /* Animated colorful light border & sheen across CTA showcase */
+    .moving-light-frame {
+      position: relative;
+      border-radius: 1rem;
+      padding: 2px;
+      background: linear-gradient(
+        120deg,
+        #F59E0B,
+        #10B981,
+        #06B6D4,
+        #8B5CF6,
+        #F43F5E,
+        #F59E0B
+      );
+      background-size: 300% 300%;
+      animation: colorBorderFlow 7s linear infinite;
+      box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.25);
+    }
+
+    @keyframes colorBorderFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Subtle moving light sweep on hero title */
+    .magnate-gold-shine {
+      background: linear-gradient(
+        90deg,
+        #F59E0B 0%,
+        #FBBF24 35%,
+        #34D399 55%,
+        #22D3EE 75%,
+        #F59E0B 100%
+      );
+      background-size: 220% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: titleLightSweep 6s linear infinite;
+    }
+
+    @keyframes titleLightSweep {
+      0% { background-position: 0% center; }
+      100% { background-position: 220% center; }
+    }
+
+    /* Respect reduced motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      .light-orb,
+      .moving-light-frame,
+      .magnate-gold-shine {
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col relative selection:bg-amber-400 selection:text-slate-950">
+
+  <!-- Non-blocking Moving Colorful Ambient Lights -->
+  <div class="ambient-light-layer" aria-hidden="true">
+    <div class="light-orb orb-gold"></div>
+    <div class="light-orb orb-cyan"></div>
+    <div class="light-orb orb-emerald"></div>
+    <div class="light-orb orb-violet"></div>
+  </div>
+
+  <!-- Toast Notification Banner (No alert()) -->
+  <div id="toastNotice" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-md transition-all duration-300 opacity-0 -translate-y-6 pointer-events-none">
+    <div class="bg-magnate-panel/95 backdrop-blur-md border border-emerald-400/50 text-white px-4 py-3 rounded-2xl shadow-2xl flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2.5">
+        <span class="w-7 h-7 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs shrink-0">
+          <i class="fa-solid fa-check"></i>
+        </span>
+        <span id="toastText" class="text-xs sm:text-sm font-medium text-slate-100">Updated</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Mobile-First Container -->
+  <div class="relative z-10 flex-1 w-full max-w-xl mx-auto px-4 pt-6 pb-24 flex flex-col">
+
+    <!-- Hero Header Matching Screenshot Layout -->
+    <header class="text-center pt-2 pb-5">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/90 border border-amber-400/30 text-[11px] font-bold tracking-wider uppercase text-amber-300 mb-3 shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+        <span>Live Schedule • Mon – Sun</span>
+      </div>
+
+      <h1 class="text-4xl sm:text-5xl font-black tracking-tight leading-none uppercase magnate-gold-shine">
+        YOUNG<br />MAGNATE
+      </h1>
+
+      <p class="mt-3 text-sm sm:text-base font-medium text-cyan-200/90 leading-snug">
+        Daily Expert Football Tips <span class="text-slate-500 mx-1">•</span> Live Auto-Updates
+      </p>
+    </header>
+
+    <!-- Primary Action Buttons & VIP Strip with Moving Light Border -->
+    <section aria-label="Quick Actions" class="mb-6">
+      <div class="moving-light-frame">
+        <div class="bg-[#0B101C] rounded-[14px] p-3 space-y-3">
+          <div class="grid grid-cols-2 gap-3">
+            <button id="todayTipsBtn" type="button" class="py-4 px-3 rounded-xl bg-gradient-to-br from-red-600 to-rose-700 hover:from-red-500 hover:to-rose-600 active:scale-[0.98] text-white font-extrabold text-xs sm:text-sm tracking-wide uppercase shadow-lg shadow-red-900/40 transition cursor-pointer flex items-center justify-center gap-2">
+              <i class="fa-solid fa-fire"></i>
+              <span>TODAY'S TIPS</span>
+            </button>
+
+            <a id="vipWhatsappLink" href="#vip-section" class="py-4 px-3 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 active:scale-[0.98] text-slate-950 font-extrabold text-xs sm:text-sm tracking-wide uppercase shadow-lg shadow-amber-900/40 transition cursor-pointer flex flex-col items-center justify-center leading-tight text-center">
+              <span>JOIN VIP /</span>
+              <span>WHATSAPP</span>
+            </a>
+          </div>
+
+          <!-- VIP Banner Strip -->
+          <div class="bg-magnate-panel/90 border border-amber-400/25 rounded-xl px-3 py-2.5 flex items-center justify-between gap-2 overflow-hidden">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="text-base shrink-0">🏆</span>
+              <p class="text-[11px] sm:text-xs font-extrabold tracking-wide uppercase text-amber-300 truncate">
+                YOUNG MAGNATE VIP: DAILY HIGH-CONFIDENCE PICKS
+              </p>
+            </div>
+            <button id="openAddModalBtn" type="button" class="shrink-0 px-2.5 py-1 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-400/40 text-[11px] font-bold transition cursor-pointer">
+              <i class="fa-solid fa-plus mr-1"></i>Add Match
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Day-of-the-Week Filter Tabs (Monday - Friday + Weekend) -->
+    <section aria-label="Filter matches by day" class="mb-4">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Filter by Day</span>
+        <span id="visibleCountLabel" class="text-[11px] font-semibold text-cyan-300 bg-cyan-500/10 border border-cyan-500/25 px-2.5 py-0.5 rounded-full">
+          Showing all matches
+        </span>
+      </div>
+
+      <div id="dayFilterBar" class="flex items-center gap-2 overflow-x-auto pb-1">
+        <button type="button" data-day="All" class="day-filter-btn active-day shrink-0 px-3.5 py-2 rounded-xl text-xs font-extrabold bg-amber-400 text-slate-950 shadow-md transition cursor-pointer">
+          All Days
+        </button>
+        <button type="button" data-day="Monday" class="day-filter-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold bg-magnate-card text-slate-300 border border-slate-800 hover:border-amber-400/50 transition cursor-pointer">
+          Monday
+        </button>
+        <button type="button" data-day="Tuesday" class="day-filter-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold bg-magnate-card text-slate-300 border border-slate-800 hover:border-amber-400/50 transition cursor-pointer">
+          Tuesday
+        </button>
+        <button type="button" data-day="Wednesday" class="day-filter-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold bg-magnate-card text-slate-300 border border-slate-800 hover:border-amber-400/50 transition cursor-pointer">
+          Wednesday
+        </button>
+        <button type="button" data-day="Thursday" class="day-filter-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold bg-magnate-card text-slate-300 border border-slate-800 hover:border-amber-400/50 transition cursor-pointer">
+          Thursday
+        </button>
+        <button type="button" data-day="Friday" class="day-filter-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold bg-magnate-card text-slate-300 border border-slate-800 hover:border-amber-400/50 transition cursor-pointer">
+          Friday
+        </button>
+        <button type="button" data-day="Saturday" class="day-filter-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold bg-magnate-card text-slate-300 border border-slate-800 hover:border-amber-400/50 transition cursor-pointer">
+          Saturday
+        </button>
+        <button type="button" data-day="Sunday" class="day-filter-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold bg-magnate-card text-slate-300 border border-slate-800 hover:border-amber-400/50 transition cursor-pointer">
+          Sunday
+        </button>
+      </div>
+    </section>
+
+    <!-- Status Filter Row (All / Playing / Played) -->
+    <section aria-label="Filter by match status" class="grid grid-cols-3 gap-2 mb-5">
+      <button type="button" data-status="All" class="status-filter-btn py-2 px-2.5 rounded-xl text-xs font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 transition cursor-pointer">
+        All Fixtures
+      </button>
+      <button type="button" data-status="Playing" class="status-filter-btn py-2 px-2.5 rounded-xl text-xs font-bold bg-magnate-card text-slate-300 border border-slate-800 hover:border-emerald-400/40 transition cursor-pointer">
+        ⚡ Playing
+      </button>
+      <button type="button" data-status="Played" class="status-filter-btn py-2 px-2.5 rounded-xl text-xs font-bold bg-magnate-card text-slate-300 border border-slate-800 hover:border-slate-600 transition cursor-pointer">
+        ✔ Played
+      </button>
+    </section>
+
+    <!-- Matches Feed Container -->
+    <section id="matchesFeed" aria-label="Football Predictions List" class="space-y-4 mb-7">
+      <!-- Match cards rendered dynamically by JavaScript -->
+    </section>
+
+    <!-- VIP / WhatsApp Info Card -->
+    <section id="vip-section" class="moving-light-frame mb-6">
+      <div class="bg-magnate-card rounded-[14px] p-4 sm:p-5">
+        <div class="flex items-center justify-between gap-2 mb-2">
+          <h2 class="text-base font-extrabold text-amber-300 flex items-center gap-2">
+            <span>🧲</span>
+            <span>Young Magnate VIP Lounge</span>
+          </h2>
+          <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+            Daily Picks
+          </span>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-4">
+          Get daily match breakdowns, clean market selections, and direct WhatsApp alerts across weekday and weekend fixtures.
+        </p>
+        <div class="flex flex-wrap items-center gap-2.5">
+          <button id="copyVipInviteBtn" type="button" class="flex-1 py-2.5 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs sm:text-sm transition cursor-pointer">
+            <i class="fa-brands fa-whatsapp mr-1.5"></i>Copy VIP Invite Note
+          </button>
+          <button id="openAddModalSecondaryBtn" type="button" class="py-2.5 px-4 rounded-xl bg-magnate-panel hover:bg-slate-800 text-amber-300 border border-amber-400/30 font-bold text-xs sm:text-sm transition cursor-pointer">
+            + Post Match
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 18+ Play Responsibly Box Matching Screenshot -->
+    <section aria-label="Responsible Gaming Notice" class="bg-[#12161F]/95 border border-slate-800/90 rounded-2xl p-5 sm:p-6 text-center shadow-xl mb-6">
+      <div class="inline-flex items-center justify-center gap-2.5 mb-3">
+        <span class="w-8 h-8 rounded-full border-2 border-red-500 text-red-400 font-black text-xs flex items-center justify-center">
+          18+
+        </span>
+        <h2 class="text-lg sm:text-xl font-extrabold text-white tracking-tight">
+          Play Responsibly
+        </h2>
+      </div>
+
+      <p class="text-xs sm:text-sm text-slate-300/90 leading-relaxed max-w-md mx-auto mb-3">
+        Young Magnate provides football predictions and match analysis for informational and entertainment purposes only.
+      </p>
+
+      <p class="text-xs sm:text-sm font-bold text-slate-200 mb-1.5">
+        You must be 18 years old or over to use this site.
+      </p>
+      <p class="text-xs text-slate-400 leading-relaxed max-w-sm mx-auto">
+        Please bet responsibly and never stake more than you can afford to lose.
+      </p>
+
+      <!-- Social / Contact Icons Row Matching Screenshot -->
+      <div class="mt-5 pt-4 border-t border-slate-800/80 flex items-center justify-center gap-4">
+        <button id="shareFacebookBtn" type="button" aria-label="Share on Facebook" class="w-10 h-10 rounded-full bg-blue-600 hover:bg-blue-500 text-white flex items-center justify-center shadow-md transition cursor-pointer">
+          <i class="fa-brands fa-facebook-f text-sm"></i>
+        </button>
+        <button id="shareWhatsappBtn" type="button" aria-label="Share on WhatsApp" class="w-10 h-10 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs flex items-center justify-center shadow-md transition cursor-pointer">
+          WA
+        </button>
+        <button id="copyPageLinkBtn" type="button" aria-label="Copy Page Link" class="w-10 h-10 rounded-full bg-slate-200 hover:bg-white text-slate-900 flex items-center justify-center shadow-md transition cursor-pointer">
+          <i class="fa-solid fa-envelope text-sm"></i>
+        </button>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Floating Green Chat Bubble Matching Bottom-Right of Screenshot -->
+  <button id="floatingChatBtn" type="button" aria-label="Open Match Desk & Add Match" class="fixed bottom-5 right-5 z-30 w-14 h-14 rounded-full bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-slate-950 shadow-2xl shadow-emerald-950/80 flex items-center justify-center text-xl transition cursor-pointer">
+    <i class="fa-solid fa-comment-dots"></i>
+  </button>
+
+  <!-- Add / Manage Match Modal (No Odds Fields) -->
+  <div id="matchModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/75 backdrop-blur-sm p-4">
+    <div class="moving-light-frame w-full max-w-md">
+      <div class="bg-magnate-card rounded-[14px] p-5 text-left max-h-[90vh] overflow-y-auto">
+        <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-800">
+          <div>
+            <h3 class="text-base font-extrabold text-white flex items-center gap-2">
+              <span>🧲</span>
+              <span>Add Football Match Pick</span>
+            </h3>
+            <p class="text-[11px] text-slate-400">No odds displayed • Includes Day & Played/Playing status</p>
+          </div>
+          <button id="closeModalBtn" type="button" aria-label="Close modal" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center cursor-pointer">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <form id="addMatchForm" class="space-y-3.5">
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label for="matchDayInput" class="block text-xs font-bold text-slate-300 mb-1">Day of Week</label>
+              <select id="matchDayInput" required class="w-full rounded-xl bg-magnate-bg border border-slate-700 px-3 py-2 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-400">
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday" selected>Friday</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="matchStatusInput" class="block text-xs font-bold text-slate-300 mb-1">Match Status</label>
+              <select id="matchStatusInput" required class="w-full rounded-xl bg-magnate-bg border border-slate-700 px-3 py-2 text-xs sm:text-sm text-white focus:outline-none focus:border-emerald-400">
+                <option value="Playing">Playing (Today / Upcoming)</option>
+                <option value="Played">Played (Past Day)</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label for="matchLeagueInput" class="block text-xs font-bold text-slate-300 mb-1">League / Competition</label>
+            <input id="matchLeagueInput" type="text" required placeholder="e.g., Premier League, La Liga, Champions League" class="w-full rounded-xl bg-magnate-bg border border-slate-700 px-3 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400" />
+          </div>
+
+          <div>
+            <label for="matchTeamsInput" class="block text-xs font-bold text-slate-300 mb-1">Teams (Home vs Away)</label>
+            <input id="matchTeamsInput" type="tex
